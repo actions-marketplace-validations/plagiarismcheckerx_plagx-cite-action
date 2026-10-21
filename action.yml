@@ -1,0 +1,39 @@
+name: Plagx Cite Reference Check
+description: Check BibTeX and CSL-JSON reference lists for duplicates, invalid DOIs and missing fields, and format them in APA or MLA.
+author: Plagiarism Checker X
+branding:
+  icon: book-open
+  color: blue
+
+inputs:
+  files:
+    description: Reference files to check (.bib or CSL-JSON .json). Separate with spaces or new lines. Wildcards such as **/*.bib are allowed.
+    required: true
+  style:
+    description: Citation style for the formatted list in the job summary (apa or mla).
+    required: false
+    default: apa
+  check-dois:
+    description: Look up every DOI online (Crossref / doi.org) and report DOIs that can't be found.
+    required: false
+    default: 'false'
+  fail-on:
+    description: When the step fails. "error" (duplicates and bad DOIs), "warning" (also missing title, author or year) or "never".
+    required: false
+    default: error
+  summary:
+    description: Add the issues and the formatted reference list to the job summary.
+    required: false
+    default: 'true'
+
+outputs:
+  references:
+    description: Number of references checked.
+  errors:
+    description: Number of errors found.
+  warnings:
+    description: Number of warnings found.
+
+runs:
+  using: node24
+  main: index.js
